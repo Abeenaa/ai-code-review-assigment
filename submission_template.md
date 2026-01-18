@@ -58,3 +58,35 @@ This function counts and returns the number of email addresses in the input list
 
 **Request changes.**  
 The original code's validation is too weak and does not match how email addresses are typically defined. It could count obviously invalid entries as "valid" emails, and the explanation does not accurately reflect the practical result. The revised version uses a simple regular expression which offers a reasonable minimum check for real-world use.
+
+## Task 3 — Aggregate Valid Measurements
+
+### 1. Issues identified in the original code and explanation
+
+- **Incorrect averaging:** The code sums only non-None values but divides by the total number of items, including Nones and any other invalid entries. This results in an inaccurate average measurement.
+- **Division by zero risk:** If the input is empty or all values are invalid/None, the function will attempt to divide by zero, causing a runtime error.
+- **Unsafe handling of input types:** The function tries to cast every non-None value to float, which can raise a TypeError or ValueError if elements are not convertible (such as a string like "fail" or a dictionary).
+- **Misleading explanation:** The explanation claims it "safely handles mixed input types," but the code crashes when encountering uncastable types.
+- **No handling for non-numeric values:** Entries that aren't floats or numbers (e.g., strings or lists) will crash the logic, not be correctly ignored.
+
+---
+
+### 2. Description of your fixes
+
+- The function now checks each value and only averages numbers that are not None and can be safely converted to floats.
+- Added a try/except block so values that can’t be converted to float are simply skipped, preventing exceptions and truly handling mixed input types.
+- The function now counts only valid values for both the sum and the divisor, properly reflecting the intention to average only the measurements that make sense.
+- If no valid measurements are found, the function returns 0, avoiding division by zero.
+
+---
+
+### 3. Correct explanation for your revised code
+
+This function calculates the average of valid measurements in the input list by including only those values that are not None and that can be converted to floats. Any value that is None, or cannot be cast to a floating-point number (like a non-numeric string or other unsupported types), is ignored. If there are no valid measurements, the function returns 0.
+
+---
+
+### 4. Engineering judgment (approve / request changes / reject) and rationale
+
+**Request changes.**  
+The original code averaged the sum of valid measurements but still divided by the total number of input items, leading to incorrect results when Nones or invalid types were present. It also failed on mixed input types. The revised version computes the average only over valid, numeric entries and safely handles all common input edge cases.
