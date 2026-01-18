@@ -71,7 +71,7 @@ The original code's validation is too weak and does not match how email addresse
 
 ---
 
-### 2. Description of your fixes
+### 2. Description of the fixes
 
 - The function now checks each value and only averages numbers that are not None and can be safely converted to floats.
 - Added a try/except block so values that can’t be converted to float are simply skipped, preventing exceptions and truly handling mixed input types.
@@ -80,7 +80,7 @@ The original code's validation is too weak and does not match how email addresse
 
 ---
 
-### 3. Correct explanation for your revised code
+### 3. Correct explanation for the revised code
 
 This function calculates the average of valid measurements in the input list by including only those values that are not None and that can be converted to floats. Any value that is None, or cannot be cast to a floating-point number (like a non-numeric string or other unsupported types), is ignored. If there are no valid measurements, the function returns 0.
 
